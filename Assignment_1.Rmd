@@ -1,0 +1,39 @@
+---
+title: "Assignment_1"
+author: "David Goldsmith"
+date: "2023-01-10"
+output: html_document
+---
+
+git and GitHub -> version control (keep and restoring past versions of files) 
+  - intended for programmers collaborating  
+  files  
+    Good for version control  
+  - plain text (.txt)  
+  - .R scripts  
+  - markdown (.md/.Rmd)  
+  - .html  
+  
+git - vc for computer  
+Github - free remote website for public data storage of projects  
+  repo - "clone" to local computer  
+  commit - snapshot of current file system  
+  to commit - saving and recording changes  
+  can also merge files from different points  
+  push - transfer changes from local repo to Github  
+  pull - transfer changes from Github to local repo  
+  git status  
+  git add -A  
+  git commit -am "name/note" (everytime you make a drastic change)  
+  git push  
+  
+R project -> divides work into multiple context  
+  - working directory  
+  - workspace  
+  - history  
+  - source documents  
+
+Working in R  
+#s make headers, more make them smaller  
+*something* makes text italicized  
+**something** makes text bolded  
