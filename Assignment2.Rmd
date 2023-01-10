@@ -1,0 +1,42 @@
+---
+title: "Assignment 2"
+author: "David Goldsmith"
+date: "2023-01-10"
+output: html_document
+---
+
+## A Page on Monkeys 
+![A family of monkeys](https://img.caixin.com/2019-04-15/1555302483564385.jpg)  
+  
+Per [Wikipedia](https://en.wikipedia.org/wiki/Monkey), monkeys are the common name for the infraorder Simiiformes, aka the simians. However, this naming is an incomplete paraphyletic grouping, as *apes* are within the infraorder but are **not** considered monkeys.  
+  
+### Here are a few species of monkeys:
+* Probosis monkey (*Nasalis larvatus*)
+* Golden snub-nosed monkey (*Rhinopithecus roxellana*)
+* Tufted capuchin (*Cebus apella*)
+* Northern plains gray langur (*Semnopithecus entellus*)  
+  
+### Here are the most populus species of monkeys:  
+1. Crab-eating macaque (*Macaca fascicularis*)
+2. Müller's Bornean gibbon (*Hylobates muelleri*)  
+3. Gelada	(*Theropithecus gelada*)  
+  
+#### A table, not related to monkeys
+
+First Header  | Second Header  | Third Header
+------------- | -------------  | -------------
+Content Cell  | Content Cell   | Content Cell
+Content Cell  | Content Cell   | Content Cell  
+Content Cell  | Content Cell   | Content Cell  
+Content Cell  | Content Cell   | Content Cell  
+  
+#### And now, more types of text
+##### Subscript  
+$$Monkey_0 = Z_{a + b}$$  
+
+##### How monkeys are made  
+$$Monkey = cApe^z$$  
+
+##### And this is the code to make that superscript and equation  
+  
+`$$Monkey = cApe^z$$ `
