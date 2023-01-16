@@ -1,0 +1,63 @@
+---
+title: "Assignment3"
+author: "David Goldsmith"
+date: "2023-01-12"
+output: html_document
+---
+
+## Assignment 3
+1. This is question 1:
+
+```{r}
+
+x <- 1.1
+a <- 2.2
+b <- 3.3
+
+z <- x^a^b
+print(z)
+
+z <- (x^a)^b
+print(z)
+
+z <- 3*x^3 + 2*x^2 + 1
+print(z)
+
+```
+2. This is question 2:
+
+```{r}
+z <- c(seq(from=1, to=8), seq(from=7, to=1))
+print(z)
+
+z <- c(seq(from=1, to=1), rep(x=2, times=2), rep(x=3, times=3), rep(x=4, times=4), rep(x=5, times=5))
+print(z)
+
+z <- c(seq(from=5, to=5), rep(x=4, times=2), rep(x=3, times=2), rep(x=2, times=4), rep(x=1, times=5))
+print(z)
+```
+
+3. This is question 3:
+```{r}
+queue <- c("sheep", "fox", "owl", "ant")
+print(queue) #initial
+
+queue <- c(queue, "serpent")
+print(queue) #partA
+
+queue <- queue[-1]
+print(queue) #partB
+
+queue <- c('donkey', queue)
+print(queue) #partC
+
+queue <- queue[-5]
+print(queue) #partD
+
+queue <- append(queue, "aphid", after = 3)
+print(queue) #partE
+
+queue <- which(queue == "aphid")
+print(queue) #partF
+```
+
