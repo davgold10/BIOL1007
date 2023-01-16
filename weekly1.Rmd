@@ -1,0 +1,50 @@
+---
+title: "Weekly Assignment 1"
+author: "David Goldsmith"
+date: "2023-01-16"
+output: html_document
+---
+  
+## A Guide to Setting Up a GitHub Page in RStudio
+### AKA My First Weekly Assignment
+  
+#### Setting Up
+The following directions are meant to apply to Mac users running a 2017, 13-inch Macbook Pro on MacOS version 12.6 and an Intel Core i5 Processor. Troubleshooting may occur if on a different device with different software.
+
+First, you'll need to download some software, which can be found [here](https://posit.co/download/rstudio-desktop/). Follow the included directions, first installing R, then RStudio.  
+While those are getting installed, you should make an account on [GitHub](https://github.com/).
+  
+Once R and RStudio are downloaded, you'll need to set up a few more things. First you'll need Homebrew, instructions for which can be found [here](https://brew.sh/). To install, you'll want to open the Terminal app on your computer. Terminal allows you to communicate with the computer. Copy and paste the install command from the Homebrew site to Terminal, making sure the $ sign is not repeated. Hit the "return" key, and Homebrew should start installation.  
+
+To install Xcode, another prerequisite for Git, I followed this [website's instructions](https://www.freecodecamp.org/news/install-xcode-command-line-tools/) by using a command prompt "xcode-select --install" on Terminal again. 
+Once Homebrew and Xcode are downloaded, you'll just need to download Git. Once again, open Terminal and enter the command "$ brew install git". More directions can be found [here](https://git-scm.com/download/mac), from installing Homebrew to Git. Phew.  
+
+#### Setting up on GitHub
+
+Now you'll want to set up a repository, or a folder, to host your webpage and their associated files. You can do this by logging into your GitHub account in your web browser. Select your account in the top right corner of the page, and select "Your repositories" from the drop down menu. Next select the green button reading "new" to create a new repository. Name it, include a readme statement, do NOT add a gitignore, add an "MIT" license.
+
+#### Build the R Project on your Local Computer
+
+Open R studio. Use the upper right pull down to create a new project. Select "Version Control", "Git", and add ’*.pdf’ to gitignore or other files to not track.
+
+#### Link the local project to a remote repo
+
+RStudio should now be asking for your repository URL. Go to your repository (repo) on GitHub, and select the "clone or download" button. Copy this URL. Back in RStudio, paste the URL into the URL box. Provide the same repo name as the one you created on GitHub. Use the browse button to place the folder for this repo on your computer, but avoid placing it in the cloud to avoid errors. Click "Create Project" to finish.
+
+#### Creating the Webpage, oh my
+
+From the top left drop down in RStudio, select new markdown file. Give the webpage a title, and same it with some similar file name. Avoid spaces when saving it. Run CNRL-SHFT-K to "knit" the file, updating the save locally.
+
+From here, you can do any work or coding. When finished, you'll want to upload, or commit, to GitHub.
+
+#### Committing to GitHub
+
+RStudio should be automatically selected to "Console", but select the "Terminal" tab for what you'll be doing next. From there, type the following code.
+* git status
+* git add -A
+* git status
+* git commit -am "first commit"
+* git status
+* git push
+
+Now, you should be able to view the webpage from your repository in GitHub. Happy coding!
