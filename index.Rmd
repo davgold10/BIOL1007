@@ -13,4 +13,6 @@ output:
 
 [Assignment 2](Assignment2.html)
 
+[Assignment 3](Assignment3.html)
+
 [Wall Hours Link](https://athletics.middlebury.edu/sports/2020/6/4/facilities-climbing-wall.aspx)
