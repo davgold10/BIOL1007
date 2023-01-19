@@ -1,0 +1,137 @@
+---
+title: "Assignment 4"
+author: "David Goldsmith"
+date: "2023-01-17"
+output: html_document
+---
+
+## 1. Assign to the variable n_dims a single random integer between 3 and 10
+```{r}
+n_dims <- runif(1, min = 3, max = 10)
+n_dims <- round(n_dims)
+```
+
+```{r}
+#Create a vector of consecutive integers from 1 to n_dims^2.
+v <- seq(1:(n_dims)^2)
+print(v)
+
+#Use the sample function to randomly reshuffle these values.
+reschuffle <- sample(v)
+print(reschuffle)
+
+# create a square matrix with these elements
+squareMat <- matrix(data = reschuffle, ncol = n_dims)
+
+# print out the matrix
+print(squareMat)
+
+# find a function in r to transpose the matrix
+transpose <- t(squareMat)
+
+# print it out again and note how it has changed.
+print(transpose) 
+## flips the x and y axis
+
+# calculate the sum and the mean of the elements in the first row and then the last row
+sum(transpose[1,])
+
+mean(transpose[1,])
+
+sum(transpose[n_dims,])
+
+mean(transpose[n_dims,])
+
+# set your code up so you can re-run it to create a matrix of a different size by only changing the n_dims value
+# I just added "n_dims" instead of what that value was
+```
+## 2. Create a list with the following named elements:
+```{r}
+
+my_matrix <- matrix(runif(16), ncol=4)
+my_logical <- (runif(100, min = 1, max = 100)) > 50
+my_letters <- sample(letters)
+
+my_list <- list(my_matrix, my_logical, my_letters)
+print(my_list)
+
+# create a new list, which has the element[2,2] from the matrix, the second element of the logical vector, and the second element of the letters vector.
+
+newList1 <- list(my_list[[1]][2,2], my_list[[2]][2], my_list[[3]][2])
+
+newList2 <- list(my_matrix[2,2], my_logical[2], my_letters[2])
+
+print(newList2)
+
+### Both newList1 and newList2 accomplish and pull the same thing, I was just curious to see if one was more efficient.
+
+# use the typeof() function to confirm the underlying data types of each component in this list
+
+whatType <- c(typeof(my_matrix[2,2]), typeof(my_logical[2]), typeof(my_letters[2]))
+print(whatType)
+
+# combine the underlying elements from the new list into a single atomic vector with the c() function.
+
+newVector <- c(newList2)
+print(newVector)
+
+# what is the data type of this vector?
+
+vecType <- typeof(newVector)
+print(vecType) # I think this is wrong, it shouldn't be a list, but a string of 'characters'
+
+### to fix the above issues, could do the following to make a vector with the character type, but should be a way to maximize efficiency
+
+newVec2 <- c(0.6733791, TRUE, "j")
+print(newVec2)
+vecType2 <- typeof(newVec2)
+print(vecType2)
+
+### Additionally, this only works for the specific things loaded under this runif command. To again compromise efficiency but solve this problem, we might try:
+
+newVec3 <- c(my_matrix[2,2], my_logical[2], my_letters[2])
+print(newVec3)
+vecType3 <- typeof(newVec3)
+print(vecType3)
+
+### I think this is a good solution, but I don't understand why the command c(newList2) won't work. I suppose the list() func used to create it might inhibit it from becoming a vector.
+
+```
+## 3. Create an empty data frame with two variables (= columns) and 26 observations (= rows) below:
+```{r}
+# call the first column/variable my_unifs and fill it with 26 random uniform values from 0 to 10
+
+my_unifs <- runif(26, min = 0, max = 10)
+
+# call the second variable my_letters and fill it with 26 capital letters in random order.
+
+my_letters <- sample(LETTERS, 26)
+
+df1 <- data.frame(my_unifs, my_letters, stringsAsFactors = FALSE)
+print(df1)
+
+# for the first variable, use a single line of code in R to select 4 random rows and replace the numerical values in those rows with NA.
+
+df1$my_unifs[sample(nrow(df1),4)] <- NA
+print(df1)
+
+# for the first variable, write a single line of R code to identify which rows have the missing values.
+
+complete.cases(df1)
+
+# re-order the entire data frame to arrange the second variable in alphabetical order.
+
+df2 <- df1[order(df1$my_letters),]
+print(df2)
+
+# calculate the column mean for the first variable.
+
+colMean <- mean(my_unifs)
+print(colMean)
+
+# rename the second column ‘my_LETTERS’
+
+colnames(df1)[2] <- "my_LETTERS"
+print(df1)
+```
+

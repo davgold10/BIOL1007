@@ -8,13 +8,14 @@ output:
     highlight: github
 ---
 
-## Assignments
+## Daily Assignments
 [Assignment 1](Assignment_1.html)  
 
 [Assignment 2](Assignment2.html)
 
 [Assignment 3](Assignment3.html)
 
-[Weekly Assignment 1](weekly1.html)
+[Assignment 4/5](assignment4.html)
 
-[Wall Hours Link](https://athletics.middlebury.edu/sports/2020/6/4/facilities-climbing-wall.aspx)
+## Weekly Asssignments
+[Weekly Assignment 1](weekly1.html)
