@@ -7,6 +7,9 @@ output:
     theme: HPSTR
     highlight: github
 ---
+## About
+
+This page acts as my index of assignments for my winter term course "Reproducible Biology in R" at Middlebury College. Here you can find all of my assignments for the page.
 
 ## Daily Assignments
 [Assignment 1](Assignment_1.html)  
@@ -19,3 +22,8 @@ output:
 
 ## Weekly Asssignments
 [Weekly Assignment 1](weekly1.html)
+
+[Weekly Assignment 2](weekly2.html)
+
+## Unrelated Image
+[Tralfamadorian](https://www.forestparkreview.com/2_2_47849_2_1_original/)
