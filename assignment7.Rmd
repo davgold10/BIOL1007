@@ -1,0 +1,81 @@
+---
+title: "Assignment 7"
+author: "David Goldsmith"
+date: "2023-01-24"
+output: html_document
+---
+
+1. Using the built-in starwars data set in the dplyr package, create a new tibble with the following modifications:
+* It only includes the species that have more than 1 individual represented in the data set. (hint: first use dplyr to summarize the number of individuals per species in the data frame; then create a vector/tibble of those names; subset the species that are included in that vector)
+
+* It only includes the columns that are not of type list (hint: use glimpse to check)
+
+```{r}
+library(dplyr)
+data(starwars)
+View(starwars)
+
+speciesNum <- starwars %>%
+  count(species) %>%
+  filter(n > 1)
+
+starwars1 <- filter(starwars, species %in% speciesNum$species) %>%
+  select(-(films:starships))
+  
+glimpse(starwars)
+
+starwars1
+
+```
+2. Clean your data set: only include observations/rows that do not have an NA in the height column. Then, use dplyr to print a summary table showing the mean, median, and standard deviation of height for each species.
+
+```{r}
+starwars2 <- starwars1[complete.cases(starwars1[,2]),] %>%
+  group_by(species)
+
+starwarsSummary <- summarize(starwars2, meanHeight = mean(height), medianHeight=median(height), sdHeight=sd(height))
+
+starwarsSummary
+```
+
+
+3. Create a box plot figure that shows the variation in heights among Star Wars species. Do the values in your summary table line up with the plot? Code so that each box plot (Species) is be filled with a different color. Change your axes labels so that species is capitalized and height is capitalized and shows units (cm). Use a different theme option. Then look into the annotate or geom_text functions and add the text “p=1.2E-0.5” to the top right corner.
+
+```{r}
+library(ggplot2)
+library(ggthemes)
+
+# heightPlot <- qplot(x=starwars2$species, y=starwars2$height, geom="boxplot", fill="green")
+
+heightPlot <- ggplot(data=starwars2) +
+  aes(x=species, y=height) +
+  geom_boxplot(fill=c("red", "orange", "yellow", "green", "blue", "darkblue", "purple", "magenta", "black")) +
+  xlab("Species") +
+  ylab("Height (cm)") +
+  theme_dark() +
+  annotate("text", x=9, y=max(starwars2$height), label="p=1.2E-0.5")
+
+heightPlot
+
+# It looks like most of the means match up to my summary values, but "droids" are very far off
+
+
+```
+4. Using the same or a different built-in data set, create at least one additional (and different kind of) plot. Experiment with different arguments, features, and colors.
+
+```{r}
+plot2 <- ggplot(data=starwars2) +
+  aes(x=species, y=mass) +
+  geom_boxplot(fill=rev(c("red", "orange", "yellow", "green", "blue", "darkblue", "purple", "magenta", "black"))) +
+  xlab("Species") +
+  ylab("Mass (kg)") +
+  theme_dark()
+
+plot2
+```
+
+5. Finally, create a multi-panel figure with the graphs you created.
+```{r}
+heightPlot + plot2
+```
+
