@@ -31,7 +31,7 @@ iris1 <- filter(iris, Species == "virginica" | Species == "versicolor", Sepal.Le
 3. Now, create a iris2 data frame from iris1 that contains only the columns for Species, Sepal.Length, and Sepal.Width. How many observations and variables are in the data set?
 
 ```{r}
-iris2 <- select(iris1, -Petal.Length, -Petal.Width)
+iris2 <- select(iris1, -Petal.Length, -Petal.Width) #excluding PetalLength and Width is more efficient than directing iris2 what to include.
 
 # Observations = 56
 # Variables = 3
@@ -40,7 +40,7 @@ iris2 <- select(iris1, -Petal.Length, -Petal.Width)
 4. Create an iris3 data frame from iris2 that orders the observations from largest to smallest sepal length. Show the first 6 rows of this data set.
 
 ```{r}
-iris3 <- arrange(iris2, by=Sepal.Length)
+iris3 <- arrange(iris2, desc(Sepal.Length)) #originally had by=Sepal.Length, which had it in ascending order instead
 head(iris3)
 ```
 
@@ -56,7 +56,7 @@ iris4 <- mutate(iris3, Sepal.Area=Sepal.Length*Sepal.Width)
 6. Create the variable irisTab that shows the average sepal length, the average sepal width, and the sample size of the entire iris4 data frame and print irisTab.
 
 ```{r}
-irisTab <- summarize(iris4, meanSepalLength=mean(Sepal.Length, na.rm=TRUE), meanSepalWidth=mean(Sepal.Width, na.rm=TRUE), number = n())
+irisTab <- summarize(iris4, meanSepalLength=mean(Sepal.Length, na.rm=TRUE), meanSepalWidth=mean(Sepal.Width, na.rm=TRUE), number = n()) #correct, I just added the command to exclude NAs, which may not have been necessary
 
 print(irisTab)
 
@@ -67,7 +67,7 @@ print(irisTab)
 7. Finally, create iris5 that calculates the average sepal length, the average sepal width, and the sample size for each species of in the iris4 data frame and print iris5.
 
 ```{r}
-iris5 <- iris4 %>%
+iris5 <- iris4 %>% #this way is more efficient, but solutions did not use piping
   group_by(Species) %>%
   summarize(meanSepalLength=mean(Sepal.Length, na.rm=TRUE), meanSepalWidth=mean(Sepal.Width, na.rm=TRUE), number = n())
   
@@ -78,7 +78,7 @@ print(iris5)
 
 ```{r}
 irisFinal <- iris %>%
-  filter(Species == "virginica" | Species == "versicolor", Sepal.Length > 6, Sepal.Width > 2.5) %>%
+  filter(Species == "virginica" | Species == "versicolor", Sepal.Length > 6, Sepal.Width > 2.5) %>% #can use %in% and c() for efficiency
   select(-Petal.Length, -Petal.Width) %>%
   arrange(by=Sepal.Length) %>%
   mutate(Sepal.Area=Sepal.Length*Sepal.Width) %>%

@@ -24,10 +24,14 @@ This page acts as my index of assignments for my winter term course "Reproducibl
 
 [Assignment 7](assignment7.html)
 
+[Assignment 8](assignment8.html)
+
 ## Weekly Asssignments
 [Weekly Assignment 1](weekly1.html)
 
 [Weekly Assignment 2](weekly2.html)
+
+[Weekly Assignment 3](weekly3.html)
 
 ## Unrelated Image
 [Tralfamadorian](https://www.forestparkreview.com/2_2_47849_2_1_original/)

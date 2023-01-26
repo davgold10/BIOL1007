@@ -15,6 +15,7 @@ output: html_document
 # input: m1 (mean 1), m2 (mean 2)
 # outputs: data frame
 
+set.seed(123)
 dfmaker <- function(m1, m2) {
 
   type <- c(rep("Control", 25), rep("Treatment", 25))
@@ -23,7 +24,9 @@ dfmaker <- function(m1, m2) {
   return(p)
 }
 
-dfmaker(10, 45)
+data <- dfmaker(10, 45)
+head(data)
+# not particularly reproducible, as only the means are manipulated. Could do nearly the same, but add sd and n to the function's objects to allow for more manipulation
 ```
 2. Save your new function’s output as a variable, and view the first 6 rows of the data frame.
 ```{r}
@@ -33,8 +36,8 @@ head(thing)
 3. Let’s say you would like to know whether there is a statistically significant difference in “Value” (response variable y) depending on “Type” (explanatory variable x). Type ?aov in the console to determine how to run an analysis of variance (ANOVA) on your simulated data. The formula is written as yVar~xVar with yVar as the column name of your response variable and xVar as the column name of your explanatory variable. Write a line of code that displays a summary of your ANOVA.
 
 ```{r}
-aovtest <- aov(value~type, data = dfmaker(10, 45))
-summary(aovtest)
+test <- aov(value~type, data = dfmaker(10, 45))
+summary(test)
 ```
 4. Finally create a function that uses a data frame as its input and returns only the p-value of an ANOVA summary table (feel free to use Google/Stack Overflow). Write your code in such a way that you can use any simulated data set with two columns (i.e. the output of your first function) as your ANOVA function’s argument.
 
@@ -44,14 +47,15 @@ summary(aovtest)
 # input: df (two column data frame)
 # outputs: p value from ANOVA chart
 
-hm <- function(df) {
-  aovtest <- aov(value~type, data = dfmaker(10, 45))
-  pvalue <- summary(aovtest)[[1]][["Pr(>F)"]][1]
+thisPval <- function(df=NULL) {
+  aovtest <- aov(value~type, data = df)
+  # pvalue <- summary(aovtest)[[1]][["Pr(>F)"]][1] #did function in one less line, but pulls only from aovtest from one event. should redo an aov test, and look like the following
+  testSummary <- summary(test)
+  pvalue <- testSummary[[1]][["Pr(>F)"]][1]
   return(pvalue)
 }
 
-please <- dfmaker(10,45)
-hm(please)
+thisPval(df=data)
 
 ```
 

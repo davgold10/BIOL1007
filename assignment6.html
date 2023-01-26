@@ -393,7 +393,7 @@ the data set?</li>
 columns for Species, Sepal.Length, and Sepal.Width. How many
 observations and variables are in the data set?</li>
 </ol>
-<pre class="r"><code>iris2 &lt;- select(iris1, -Petal.Length, -Petal.Width)
+<pre class="r"><code>iris2 &lt;- select(iris1, -Petal.Length, -Petal.Width) #excluding PetalLength and Width is more efficient than directing iris2 what to include.
 
 # Observations = 56
 # Variables = 3</code></pre>
@@ -402,15 +402,15 @@ observations and variables are in the data set?</li>
 from largest to smallest sepal length. Show the first 6 rows of this
 data set.</li>
 </ol>
-<pre class="r"><code>iris3 &lt;- arrange(iris2, by=Sepal.Length)
+<pre class="r"><code>iris3 &lt;- arrange(iris2, desc(Sepal.Length)) #originally had by=Sepal.Length, which had it in ascending order instead
 head(iris3)</code></pre>
-<pre><code>##   Sepal.Length Sepal.Width    Species
-## 1          6.1         2.9 versicolor
-## 2          6.1         2.8 versicolor
-## 3          6.1         2.8 versicolor
-## 4          6.1         3.0 versicolor
-## 5          6.1         3.0  virginica
-## 6          6.1         2.6  virginica</code></pre>
+<pre><code>##   Sepal.Length Sepal.Width   Species
+## 1          7.9         3.8 virginica
+## 2          7.7         3.8 virginica
+## 3          7.7         2.6 virginica
+## 4          7.7         2.8 virginica
+## 5          7.7         3.0 virginica
+## 6          7.6         3.0 virginica</code></pre>
 <ol start="5" style="list-style-type: decimal">
 <li>Create an iris4 data frame from iris3 that creates a column with a
 sepal area (length * width) value for each observation. How many
@@ -425,7 +425,7 @@ observations and variables are in the data set?</li>
 average sepal width, and the sample size of the entire iris4 data frame
 and print irisTab.</li>
 </ol>
-<pre class="r"><code>irisTab &lt;- summarize(iris4, meanSepalLength=mean(Sepal.Length, na.rm=TRUE), meanSepalWidth=mean(Sepal.Width, na.rm=TRUE), number = n())
+<pre class="r"><code>irisTab &lt;- summarize(iris4, meanSepalLength=mean(Sepal.Length, na.rm=TRUE), meanSepalWidth=mean(Sepal.Width, na.rm=TRUE), number = n()) #correct, I just added the command to exclude NAs, which may not have been necessary
 
 print(irisTab)</code></pre>
 <pre><code>##   meanSepalLength meanSepalWidth number
@@ -437,7 +437,7 @@ print(irisTab)</code></pre>
 average sepal width, and the sample size for each species of in the
 iris4 data frame and print iris5.</li>
 </ol>
-<pre class="r"><code>iris5 &lt;- iris4 %&gt;%
+<pre class="r"><code>iris5 &lt;- iris4 %&gt;% #this way is more efficient, but solutions did not use piping
   group_by(Species) %&gt;%
   summarize(meanSepalLength=mean(Sepal.Length, na.rm=TRUE), meanSepalWidth=mean(Sepal.Width, na.rm=TRUE), number = n())
   
@@ -457,7 +457,7 @@ for irisTab) into an extended piping operation that uses iris as the
 input and generates irisFinal as the output.</li>
 </ol>
 <pre class="r"><code>irisFinal &lt;- iris %&gt;%
-  filter(Species == &quot;virginica&quot; | Species == &quot;versicolor&quot;, Sepal.Length &gt; 6, Sepal.Width &gt; 2.5) %&gt;%
+  filter(Species == &quot;virginica&quot; | Species == &quot;versicolor&quot;, Sepal.Length &gt; 6, Sepal.Width &gt; 2.5) %&gt;% #can use %in% and c() for efficiency
   select(-Petal.Length, -Petal.Width) %&gt;%
   arrange(by=Sepal.Length) %&gt;%
   mutate(Sepal.Area=Sepal.Length*Sepal.Width) %&gt;%
