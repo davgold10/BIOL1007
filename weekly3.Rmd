@@ -1,0 +1,32 @@
+---
+title: "Weekly Assignment 3"
+author: "David Goldsmith"
+date: "2023-01-30"
+output: html_document
+---
+
+```{r}
+
+library(ggplot2)
+library(tidyverse)
+library(ggthemes)
+
+# Data obtained from A continental scale trophic cascade from wolves through coyotes to foxes, https://doi.org/10.5061/dryad.s0d20
+
+dryadData <- read.table("data/weekly3datagood.csv", header=TRUE, sep=",", stringsAsFactors = TRUE)
+
+#glimpse(dryadData)
+#head(dryadData)
+#table(dryadData$Site)
+
+dryadData$Site <- factor(dryadData$Site, labels=c("Manitoba", "Saskatch")) #creating 'labels' to use for the plot
+
+p <- ggplot(data=dryadData, #loads the data
+        aes(x= EdgeDistance, y = Coyote.FoxRatio)) +
+      geom_point() +
+  xlab("Distance to wolf distribution edge (km)") +
+  ylab("Coyote:fox ratio")
+
+print(p)
+```
+

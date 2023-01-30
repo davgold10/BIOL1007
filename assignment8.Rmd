@@ -30,9 +30,9 @@ library(ggthemes)
 
 dryadData <- read.table("Data/veysey-babbitt_data_amphibians.csv", header=TRUE, sep=",", stringsAsFactors = TRUE) #reads and saves the csv
 
-# glimpse(dryadData)
-# head(dryadData)
-# table(dryadData$species)
+glimpse(dryadData)
+head(dryadData)
+table(dryadData$species)
 
 dryadData$species<-factor(dryadData$species, labels=c("Spotted Salamander", "Wood Frog")) #creating 'labels' to use for the plot
 
