@@ -1,0 +1,15 @@
+---
+title: "Final Assignment"
+author: "David Goldsmith"
+date: "2023-01-31"
+output: html_document
+---
+```{r}
+library(tmap)
+
+tmap_mode("view")
+. <- data("World")
+tm_shape(World) +
+    tm_polygons("HPI")
+```
+

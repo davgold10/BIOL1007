@@ -1,0 +1,29 @@
+---
+title: "Weekly 4"
+author: "David Goldsmith"
+date: "2023-01-31"
+output: html_document
+---
+
+Simulate a brand new data frame (the type of data is up to you) and conduct a statistical analysis in R using 2 variables. Create a basic ggplot that goes with the analysis.
+
+```{r}
+## Set up libraries
+library(tidyverse)
+library(ggthemes)
+library(ggplot2)
+
+data(iris)
+glimpse(iris)
+
+regModel <- lm(Sepal.Length ~ Sepal.Width, data = iris)
+print(regModel)
+summary(regModel)$"r.squared"
+
+regPlot <- ggplot(data = iris, aes(x=Sepal.Length, y=Sepal.Width)) +
+  geom_point() +
+  stat_smooth(method="lm", se = 0.99)
+
+regPlot
+```
+
