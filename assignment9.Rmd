@@ -1,0 +1,75 @@
+---
+title: "Assignment 9"
+author: "David Goldsmith"
+date: "2023-01-30"
+output: html_document
+---
+
+1. Using a for loop and an if statement, write a function to calculate the number of zeroes in a numeric vector. Before entering the loop, set up a vector of integers with some zero values. Then, set up a counter variable counter <- 0. Inside the loop, add 1 to counter each time you have a zero in the vector. Finally, use return(counter) for the output.
+
+```{r}
+x <- rep(0:3, times = 4 )
+counter <- 0
+
+#ifelse (x < 1, 1, x)
+
+for(i in 1:length(x)) {
+  if(x[i]==0) {
+    counter <- counter + 1
+  }
+}
+counter
+```
+
+2. Write a function that takes as input two integers representing the number of rows and columns in a matrix. The output is a matrix of these dimensions in which each element is the product of the row number x the column number.
+
+```{r}
+product <- function(x, y) {
+  v <- matrix(0, nrow = x, ncol = y)
+  for(i in 1:x) {
+    for(j in 1:y) {
+      v[i, j] <- i * j
+                  }
+                }
+  return(v)
+}
+
+product(3, 4)
+
+```
+
+
+3. Use a for loop to repeat your previous functions from Weekly Assignment 2 (which simulate a data frame and extract a p-value) 100 times. Store the results in a data frame that has 1 column indicating the replicate number and 1 column for the p-values (a total of 2 columns and 100 rows).
+
+```{r}
+## function in the for loop
+simData <- function(mean1=10, sd1=1.5, mean2=45, sd2=2, n=25){
+  
+  Type <- rep(c("Control", "Treatment"), each = n)
+  Value <- c(rnorm(n, mean = mean1, sd = sd1), rnorm(n, mean = mean2, sd = sd2))
+  dframe <- data.frame(Type, Value)
+  return(dframe)
+}
+
+data<-simData()
+myPval <- function(df=NULL){
+  
+  test <- aov(Value ~ Type, data=df)
+  testSummary <- summary(test)
+  p_value <- testSummary[[1]][["Pr(>F)"]][1]
+  return(p_value)
+}
+
+myPval(df=simData())
+
+# for loop
+loopIt <- data.frame(attemptNumber = rep(NA, 100), p_val = rep(NA, 100))
+for(i in 1:100){
+  loopIt[i, "attemptNumber"] <- i
+  loopIt[i, "p_val"] <- myPval(df=simData())
+}
+
+loopIt
+
+```
+

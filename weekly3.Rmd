@@ -6,27 +6,31 @@ output: html_document
 ---
 
 ```{r}
-
 library(ggplot2)
 library(tidyverse)
 library(ggthemes)
 
 # Data obtained from A continental scale trophic cascade from wolves through coyotes to foxes, https://doi.org/10.5061/dryad.s0d20
 
-dryadData <- read.table("data/weekly3datagood.csv", header=TRUE, sep=",", stringsAsFactors = TRUE)
+dryadData <- read.table("data/weekly3datagood.csv", header=TRUE, sep=",", stringsAsFactors = TRUE) %>%
+  select(Coyote:Year, -Site) %>%
+  filter(Block == "DuckMountain"| Block == "Porcupine") %>%
+  pivot_longer(
+    cols=c("Coyote", "Fox"),
+    names_to="species",
+    values_to="furReturns"
+  )
 
-#glimpse(dryadData)
-#head(dryadData)
-#table(dryadData$Site)
+Plot <- ggplot(data = dryadData, mapping=aes(x=Year, y=furReturns, color = species)) +
+  geom_line(show.legend = TRUE) +
+  facet_wrap(~Block, nrow = 2) +
+  xlab("") +
+  ylab("Total nos. fur returns") +
+  theme_classic() +
+  scale_x_continuous(breaks=c(1996, 1997, 1998, 1999, 2000, 2001, 2002, 2003, 2004, 2005, 2006, 2007, 2008, 2009, 2010, 2011)) +
+  scale_y_continuous(breaks=c(100, 200, 300, 400)) +
+  theme(axis.text.x = element_text(angle = 30, vjust = 0.5, hjust=1))
 
-dryadData$Site <- factor(dryadData$Site, labels=c("Manitoba", "Saskatch")) #creating 'labels' to use for the plot
-
-p <- ggplot(data=dryadData, #loads the data
-        aes(x= EdgeDistance, y = Coyote.FoxRatio)) +
-      geom_point() +
-  xlab("Distance to wolf distribution edge (km)") +
-  ylab("Coyote:fox ratio")
-
-print(p)
+Plot
 ```
 

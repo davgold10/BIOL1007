@@ -26,6 +26,8 @@ This page acts as my index of assignments for my winter term course "Reproducibl
 
 [Assignment 8](assignment8.html)
 
+[Assignment 9](assignment9.html)
+
 ## Weekly Asssignments
 [Weekly Assignment 1](weekly1.html)
 
