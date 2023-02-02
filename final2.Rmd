@@ -1,0 +1,63 @@
+---
+title: "Final2"
+author: "David Goldsmith"
+date: "2023-02-01"
+output: html_document
+---
+
+In this final project, I wanted to repeat a similar analysis we performed in GEOG0150. The goal was to assess differences in NDVI (Normalized Difference Vegetation Index) by census block. I chose to look at the NYC area.
+
+[This website](https://michaelminn.net/tutorials/r-landsat/index.html) was particularly helpful in my work.
+
+### Importing Data
+
+1. Make an account with USGS.
+2. Through [EarthExplorer](https://earthexplorer.usgs.gov/), filter data.
+* For location, use the polygon section to navigate to the area of study. Mine was NYC.
+* Select a data range. For NDVI, it's best to choose summer months (when plants have the most vegetation).
+* Select your data set. I chose Landsat > Collection 2 Level 1.
+* on the bottom of the page, select "Results".
+3. Open the files for data sets with the fewest clouds.
+4. Download the "product bundle", or select "red" and "NIR" bands.
+5. Move these files to your project locally.
+
+### Install Packages
+
+```{r}
+library(raster)
+library(tigris)
+library(ggplot2)
+library(rgdal)
+```
+
+### Name Bands and convert to NDVI
+```{r}
+red = raster("redEssex.TIF")
+near.infrared = raster("nirEssex.TIF")
+
+# Establish a boundary around the area of choice to zoom in
+
+boundary = raster(ymx=40.93, xmn=-74.41, ymn=40.66, xmx=-74.09)
+boundary = projectExtent(boundary, red@crs)
+
+red = crop(red, boundary)
+near.infrared = crop(near.infrared, boundary)
+
+## Calculate NDVI(Normalized Difference Vegetation Index). 
+### Formula is commonly NDVI = (NIR - Red)/(NIR + Red)
+ndvi = (near.infrared - red) / (near.infrared + red)
+
+colors = colorRampPalette(c("red3", "white", "darkcyan"))(255)
+
+# Use a histogram to determine what to set limits to
+# hist(ndvi)
+
+# Plot the full NDVI
+plot(ndvi, zlim=c(0, 0.6), col=colors)
+
+```
+### Add Geographical Census Tracts
+```{r}
+
+```
+

@@ -1,0 +1,109 @@
+---
+title: "Final Project on LANDSAT 8 in R"
+author: "David Goldsmith"
+date: "2023-02-02"
+output: html_document
+---
+In this final project, I wanted to repeat a similar analysis we performed in GEOG0150. The goal was to load different bands and band combinations to look at the makeup of the Middlebury area.
+
+I chose to go this route because I was curious how other programs compare to Google Earth Engine, which I learned in GEOG0150. I had initially intended to compare NDVI values to median household income by census tract, but I found that R is a somewhat complicated software to do this on. Instead, this final project demonstrated how to install and load LANDSAT data, and how it can be used in R.
+
+[This website](https://michaelminn.net/tutorials/r-landsat/index.html), written by Michael Minn was particularly helpful in my work.
+
+### Importing Data
+
+1. Make an account with USGS.
+2. Through [EarthExplorer](https://earthexplorer.usgs.gov/), filter data.
+* For location, use the polygon section to navigate to the area of study. Mine was a point in Middlebury.
+* Select a data range. For NDVI, it's best to choose summer months (when plants have the most vegetation).
+* Select your data set. I chose Landsat > Collection 2 Level 1.
+* on the bottom of the page, select "Results".
+3. Open the files for data sets with the fewest clouds.
+4. Download the "product bundle", or select bands of choice. I downloaded those for natural color, red, nir.
+5. Move these files to your project locally.
+
+### Install Packages
+```{r}
+library(raster)
+library(ggplot2)
+```
+
+### Creating the Plots
+```{r}
+## Load in your bands
+redVT = raster("finalData/redVermontBand.TIF")
+near.infraredVT = raster("finalData/nirVermontBand.TIF")
+shortWave1 = raster("finalData/sw_ir_1.TIF")
+shortWave2 = raster("finalData/sw_ir_2.TIF")
+
+## Set boundaries (limit the area displayed)
+boundary = raster(ymx=44.056, xmn=-73.215, ymn=43.85, xmx=-73.016)
+
+#### NDVI plot
+boundary_ndvi = projectExtent(boundary, redVT@crs)
+
+red = crop(redVT, boundary_ndvi)
+near.infraredVT = crop(near.infraredVT, boundary_ndvi)
+
+# Perform band math to obtain NDVI values in the raster
+ndvi = (near.infraredVT - redVT) / (near.infraredVT + redVT)
+## ^ This yields an error, but so far does not impact final result
+
+# Use a histogram to determine which values to limit for
+hist(ndvi)
+## Although values below 0 exist, I excluded them to avoid confusion. These points are spots of water.
+
+# Set a color palatte
+colors = colorRampPalette(c("red3", "white", "darkcyan"))(255)
+
+ndvi_plot <- plot(ndvi, zlim=c(0, 0.7), col=colors)
+
+#### Short-wave Infrared Plots
+
+# Use the stack feature to blend the necessary bands
+swir = stack(shortWave2, shortWave2, redVT)
+
+# Modify the boundary
+boundary_swir = projectExtent(boundary, swir@crs)
+
+# Crop the boundary to the swir data
+swir_crop = crop(swir, boundary_swir)
+
+# Like before, plot the model. However, make sure "plotRGB" is used.
+swir_plot <- plotRGB(swir_crop, scale=65535, stretch="lin")
+
+
+#### Natural Color Plot
+
+# load the band, but instead of raster(), use brick(). The file already contains layered bands
+allNatty = brick("nattyData.tif")
+
+# build a boundary
+boundary_allNatty = projectExtent(boundary, allNatty@crs)
+
+# apply the boundary to the band
+allNatty_cropped = crop(allNatty, boundary_allNatty)
+
+# as with swir, use plotRGB()
+natty_plot <- plotRGB(allNatty_cropped)
+
+```
+
+
+# So what do these colors mean?
+
+## NDVI
+Low NDVI numbers (red) indicate no/low vegetation, while high values (blue) indicate lots of healthy vegetation. Starkly white areas are often water sources. (Can you spot Lake Dunmore?)
+
+## Short-Wave Infrared
+Bigger color variation, with darker shades of green showing denser vegetation. Urban areas are blue, soil is brown. Deep blues indicate water.
+
+## Natural Color
+As it sounds.
+
+### Final Notes and Going Beyond
+
+Most of my issues in comparing LANDSAT data to census data came from trouble with accessing the right files; the raster package reads geoJson files, not commonly found shp files.
+
+
+

@@ -37,5 +37,7 @@ This page acts as my index of assignments for my winter term course "Reproducibl
 
 [Weekly Assignment 4](weekly4.html)
 
+## [Final Assignment](finalFinal.html)
+
 ## Unrelated Image
 [Tralfamadorian](https://www.forestparkreview.com/2_2_47849_2_1_original/)
